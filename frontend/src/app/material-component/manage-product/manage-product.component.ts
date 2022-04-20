@@ -79,12 +79,12 @@ delete(element:any){
     dialogConfig.data = {
       message:'delete ' + element.name + ' product ?'
     }
-    dialogConfig.width="550px";
+    dialogConfig.width="500px";
     const dialogRef = this.dialog.open(ConfirmationComponent,dialogConfig);
-  this.router.events.subscribe(()=>{
-    this.deleteProduct(element.id);
-    dialogRef.close();
-  });
+    const sub = dialogRef.componentInstance.onEmitStatusChange.subscribe((res)=>{
+      this.deleteProduct(element.id);
+      dialogRef.close();
+    })
 }
 
 deleteProduct(id:any){
