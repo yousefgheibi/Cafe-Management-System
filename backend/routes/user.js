@@ -143,12 +143,14 @@ router.post('/changePassword', (req, res) => {
     const user = req.body;
     const email = res.locals.email;
     var query = "select * from user where email=? and password=?";
+    console.log(user);
+    console.log(email);
     connection.query(query, [email, user.oldPassword], (err, result) => {
         if (!err) {
-            if (result.length <= 0) {
-                return res.status(400).json({ message: "Incorrect Old Password!" });
-            }
-            else if (result[0].password == user.oldPassword) {
+            // if (result.length <= 0) {
+            //     return res.status(400).json({ message: "Incorrect Old Password!" });
+            // }
+            if (result[0].password == user.oldPassword) {
                 query = "update user set password=? where email=?";
                 connection.query(query, [user.newPassword, email], (err, result) => {
                     if (!err) {
