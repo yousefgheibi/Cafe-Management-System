@@ -22,6 +22,8 @@
     "@angular/platform-browser": "~11.2.10",
     "@angular/platform-browser-dynamic": "~11.2.10",
     "@angular/router": "~11.2.10",
+    "file-saver": "^2.0.5",
+    "file-server": "^2.2.0",
     "jwt-decode": "^3.1.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

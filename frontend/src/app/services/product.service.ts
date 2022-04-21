@@ -29,5 +29,12 @@ export class ProductService {
     return this.httpClient.delete(this.url+'/product/delete/'+id);
   }
 
+  getProductsByCategory(id:any){
+    return this.httpClient.get(this.url + '/product/getByCategory/'+id);
+  }
+
+  getProductsById(id:any){
+    return this.httpClient.get(this.url + '/product/getById/'+id);
+  }
 }
  
