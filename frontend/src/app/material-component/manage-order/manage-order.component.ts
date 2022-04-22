@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { BillService } from 'src/app/services/bill.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -22,7 +23,7 @@ export class ManageOrderComponent implements OnInit {
   price: any;
   totalAmount: number = 0;
 
-  constructor(private formBuilder: FormBuilder, private categoryService: CategoryService, private productService: ProductService, private snackbarService: SnackbarService, private billService: BillService) { }
+  constructor(private formBuilder: FormBuilder,private router:Router, private categoryService: CategoryService, private productService: ProductService, private snackbarService: SnackbarService, private billService: BillService) { }
 
   ngOnInit(): void {
     this.getCategorys();
@@ -159,7 +160,7 @@ export class ManageOrderComponent implements OnInit {
       productDetails: JSON.stringify(this.dataSource)
     }
     this.billService.generateReport(data).subscribe((res:any)=>{
-      // this.downloadFile(res?.uuid);
+      this.downloadFile(res?.uuid);
       this.manageOrderForm.reset();
       this.dataSource = [];
       this.totalAmount = 0;
@@ -174,13 +175,15 @@ export class ManageOrderComponent implements OnInit {
     })
   }
 
-  // downloadFile(fileName:any){
-  //   var data = {
-  //     uuid:fileName
-  //   }
+  downloadFile(fileName:any){
+    var data = {
+      uuid:fileName
+    }
 
-  //   this.billService.getPdf(data).subscribe((res:any)=>{
-  //     saveAs(res,fileName+'.pdf');
-  //   })
-  // }
+    this.billService.getPdf(data).subscribe((res:any)=>{
+      // saveAs(res,fileName+'.pdf');
+      this.router.navigate(['file:///D:/Project/self/Cafe-Management-System/backend/generated_pdf/'+data.uuid +'.pdf'])
+      
+    })
+  }
 }
